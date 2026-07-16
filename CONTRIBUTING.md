@@ -1,7 +1,7 @@
 # Contributing to ShyPyEngine
 
-Thanks for your interest in contributing! ShyPyEngine is a learning-friendly
-project, so these guidelines aim to be clear enough for first-time
+Thanks for your interest in contributing! ShyPyEngine is a learning friendly
+project, so these guidelines aim to be clear enough for first time
 contributors while keeping the codebase consistent as it grows.
 
 ## Table of Contents
@@ -27,7 +27,7 @@ ShyPyEngine uses a three-tier branching model:
 ```
 main            (protected, always stable)
  └── develop     (integration branch)
-      └── feature/<name>   (short-lived, one topic each)
+      └── feature/<name>   (short lived, one topic each)
 ```
 
 - **`main`** — Never commit directly. Only updated via reviewed, approved pull
@@ -78,7 +78,7 @@ style:
 
 **Examples:**
 ```
-feat(electrostatics): add finite-difference Poisson solver
+feat(electrostatics): add finite difference Poisson solver
 docs(readme): clarify installation steps
 test(brownian): add MSD convergence test
 fix(core): correct units in Coulomb constant
@@ -98,7 +98,7 @@ Keep the summary line under 72 characters and written in the imperative mood
 6. Request review from at least one other team member.
 7. Address review feedback with additional commits (avoid force-pushing over
    review history until approval).
-8. A maintainer merges once approved and CI passes. Squash-merge into
+8. A maintainer merges once approved and CI passes. Squash merge into
    `develop` is preferred to keep history readable.
 
 ## Coding Standards
@@ -123,7 +123,7 @@ Keep the summary line under 72 characters and written in the imperative mood
 - Use `pytest`. Name test files `test_<module>.py` and test functions
   `test_<behavior>()`.
 - Where possible, validate numerical results against known analytical
-  solutions (e.g., point-charge field, free diffusion MSD scaling).
+  solutions (e.g., point charge field, free diffusion MSD scaling).
 - Run the full suite before opening a PR:
   ```bash
   pytest --cov=src/shypyengine
@@ -137,7 +137,8 @@ Keep the summary line under 72 characters and written in the imperative mood
   modules interact.
 - Update `CHANGELOG.md` under an "Unreleased" section for any user-facing
   change.
-- Add or update a usage example in `examples/` for new public-facing
+- Add or update a usage example in `examples/` for new public facing
   features.
 
-Thank you for helping build ShyPyEngine! 🎉
+Thank you, 
+Building ShyPyEngine: where curiosity simulates the real world ! 🎉
