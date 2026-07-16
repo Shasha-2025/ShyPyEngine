@@ -1,14 +1,14 @@
 # ShyPyEngine
 
-A modular, beginner-friendly computational physics engine written in Python.
+A modular, beginner friendly computational physics engine written in Python.
 
 ShyPyEngine starts with two independent physics modules — **electrostatic field
 simulation** and **Brownian motion** — and combines them into a unified
-**drift-diffusion** simulation engine. The project is designed from day one to be
+**drift diffusion** simulation engine. The project is designed from day one to be
 easy to extend with future additions such as an interactive GUI, an AI research
 assistant, and gamified learning modes.
 
-> **Status:** 🚧 Pre-alpha. Repository scaffolding and documentation phase.
+> **Status:** 🚧 Pre alpha. Repository scaffolding and documentation phase.
 > No simulation code has been implemented yet — see [ROADMAP.md](ROADMAP.md).
 
 ---
@@ -45,7 +45,7 @@ guided exploration, and gamification for learning.
 
 | Module | Description | Status |
 |---|---|---|
-| `electrostatics` | Coulomb's law, E-field, potential, equipotentials, Laplace/Poisson finite-difference solver | Not started |
+| `electrostatics` | Coulomb's law, E-field, potential, equipotentials, Laplace/Poisson finite difference solver | Not started |
 | `brownian` | Random walk, Gaussian steps, MSD, diffusion equation | Not started |
 | `driftdiffusion` | Combines electrostatics (drift) + Brownian motion (diffusion) | Not started |
 | `visualization` | Plotting and interactive views for all modules | Not started |
@@ -61,7 +61,7 @@ ShyPyEngine/
 │   ├── core/               # Shared base classes, constants, config
 │   ├── electrostatics/     # Electrostatics module
 │   ├── brownian/           # Brownian motion module
-│   ├── driftdiffusion/     # Drift-diffusion integration module
+│   ├── driftdiffusion/     # Drift diffusion integration module
 │   ├── visualization/      # Plotting / rendering helpers
 │   └── utils/               # Shared utilities (I/O, validation, math helpers)
 ├── tests/                  # Unit and integration tests (pytest)
@@ -126,7 +126,7 @@ workflow:
 - **`develop`** — integration branch where completed features land before a
   release.
 - **Feature branches** — one per unit of work, branched from `develop`:
-  `electrostatics`, `brownian-motion`, `drift-diffusion`, `visualization`,
+  `electrostatics`, `brownian motion`, `drift diffusion`, `visualization`,
   `documentation`, `testing`, `research`, `github-setup`.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for full branching, commit, and PR
