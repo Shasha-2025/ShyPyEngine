@@ -9,8 +9,8 @@ deliverables are stable.
 
 - [x] Initialize repository, branch strategy, GitHub Desktop setup
 - [x] Define team roles and workflow
-- [ ] Create full folder hierarchy
-- [ ] Write core documentation (README, CONTRIBUTING, CHANGELOG, ROADMAP,
+- [x] Create full folder hierarchy
+- [x] Write core documentation (README, CONTRIBUTING, CHANGELOG, ROADMAP,
       LICENSE, CODE_OF_CONDUCT)
 - [ ] Configure GitHub Actions (lint + test on push/PR)
 - [ ] Add issue templates and pull request template
