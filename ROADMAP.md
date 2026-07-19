@@ -14,8 +14,8 @@ deliverables are stable.
       LICENSE, CODE_OF_CONDUCT)
 - [ ] Configure GitHub Actions (lint + test on push/PR)
 - [ ] Add issue templates and pull request template
-- [ ] Begin numerical-methods documentation (`docs/numerical_methods.md`)
-- [ ] Set up packaging (`pyproject.toml`, `requirements.txt`)
+- [x] Begin numerical-methods documentation (`docs/numerical_methods.md`)
+- [x] Set up packaging (`pyproject.toml`, `requirements.txt`)
 
 ## Phase 1 — Electrostatics Module
 
