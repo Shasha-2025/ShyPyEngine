@@ -38,8 +38,8 @@ deliverables are stable.
 
 ## Phase 3 — Drift-Diffusion Integration
 
-- [x] Combine electrostatic drift term with Brownian diffusion term
-- [x] Unified particle/ensemble simulation loop
+- [ ] Combine electrostatic drift term with Brownian diffusion term
+- [ ] Unified particle/ensemble simulation loop
 - [ ] Parameter sweep utilities (field strength, temperature, particle count)
 - [ ] Validation against known drift-diffusion analytical limits
 
