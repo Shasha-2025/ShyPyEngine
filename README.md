@@ -386,15 +386,6 @@ branch workflow:
 See [CONTRIBUTING.md](CONTRIBUTING.md) for full branching, commit, and PR
 conventions.
 
-## Team
-
-ShyPyEngine was originally planned as a five-person team project. It is now
-developed and maintained by one person:
-
-| Role | Focus |
-|---|---|
-| M4 | Sole maintainer: physics implementation, testing, and infrastructure |
-
 ## Contributing
 
 This is currently a solo project, but contributions, issues, and discussion
