@@ -14,8 +14,7 @@ under an electric field in the presence of thermal noise.
 the full plan and [CHANGELOG.md](CHANGELOG.md) for what has actually
 shipped.
 
-**Maintainer:** This project was originally scoped for a five-person team.
-It is currently developed and maintained by one person, M4.
+**Maintainer:** This project is developed and maintained by Shaurya Sharma.
 
 ---
 
