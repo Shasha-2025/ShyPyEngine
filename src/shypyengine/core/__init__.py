@@ -1,7 +1,16 @@
-"""Shared constants, base classes, and configuration for ShyPyEngine.
+"""Shared base classes, constants, and configuration used across modules."""
 
-Planned contents:
-- Physical constants (e.g., vacuum permittivity, Boltzmann constant)
-- A consistent unit-system convention (SI by default)
-- Shared base classes (e.g., a Grid/Field abstraction) used by other modules
-"""
+from shypyengine.core.constants import (
+    BOLTZMANN_CONSTANT,
+    COULOMB_CONSTANT,
+    VACUUM_PERMITTIVITY,
+)
+from shypyengine.core.exceptions import InvalidParameterError, ShyPyEngineError
+
+__all__ = [
+    "BOLTZMANN_CONSTANT",
+    "COULOMB_CONSTANT",
+    "VACUUM_PERMITTIVITY",
+    "InvalidParameterError",
+    "ShyPyEngineError",
+]

@@ -1,103 +1,60 @@
 # Architecture
 
-This document describes how ShyPyEngine's modules are organized and how they
-are intended to interact. It should be updated whenever a module is added or
-module boundaries change.
+ShyPyEngine is organized as an installable package under `src/shypyengine/`,
+with one subpackage per physics module:
 
-## Guiding Principles
+- `core/`: shared base classes, physical constants, and configuration used
+  across all modules.
+- `electrostatics/`: Coulomb's law, field/potential computation, Laplace/
+  Poisson finite-difference solver (Phase 1).
+- `brownian/`: random walk generation, Gaussian step processes, mean
+  squared displacement, and a finite-difference diffusion solver (Phase 2).
+- `driftdiffusion/`: combines the electrostatic drift term with Brownian
+  diffusion into a unified particle/ensemble simulation (Phase 3).
+- `visualization/`: shared plotting/rendering helpers used by every module
+  (static Matplotlib plots now, interactive Plotly views in Phase 4).
+- `utils/`: I/O, validation, and shared math helpers.
 
-- **Modularity** — Each physics domain (electrostatics, Brownian motion,
-  drift-diffusion) is a self-contained sub-package with its own models,
-  solvers, and tests. Modules should be usable independently.
-- **Beginner-friendly** — Public APIs favor clarity over cleverness.
-  Function and variable names mirror standard physics notation, with
-  docstrings explaining the underlying equations.
-- **Scalability** — The package layout leaves room for future additions
-  (GUI, API layer, AI assistant, gamification) without restructuring the
-  physics core.
+Each module is independent and testable in isolation; `driftdiffusion`
+composes `electrostatics` and `brownian` rather than duplicating logic.
 
-## Package Layout
+## Solver Architecture
 
-```
-src/shypyengine/
-├── core/            # Shared constants, base classes, unit handling, config
-├── electrostatics/  # Coulomb's law, fields, potentials, Laplace/Poisson solver
-├── brownian/        # Random walk, Gaussian steps, MSD, diffusion equation
-├── driftdiffusion/  # Combines electrostatics + brownian into one engine
-├── visualization/   # Shared plotting utilities (Matplotlib/Plotly)
-└── utils/           # I/O, validation, math helpers used across modules
-```
+Each physics module follows the same pattern: a stateless generator or
+solver class holds simulation parameters at construction time, validates
+them immediately (raising `InvalidParameterError` on invalid input rather
+than failing later inside a simulation loop), and exposes plain methods
+that take and return NumPy arrays. No solver reads from or writes to global
+state, and no solver depends on another solver's internals.
 
-## Module Responsibilities
+For `brownian`, this looks like:
 
-### `core`
-Owns physical constants (e.g., ε₀, k_B), a consistent unit system, shared
-base classes (e.g., a `Field` or `Grid` abstraction), and configuration
-handling. Other modules depend on `core`; `core` depends on nothing else in
-the package.
+- `RandomWalk` holds `n_dim`, `diffusion_coefficient`, and `dt`, and
+  generates full trajectory arrays on demand via `generate()`.
+- `DiffusionSolver1D` holds the grid and time-stepping parameters, exposes
+  a single-step `step()` method, and a `solve()` method that repeatedly
+  calls `step()` and collects the time history.
 
-### `electrostatics`
-Computes electric fields and potentials from charge configurations, extracts
-equipotential lines, and solves the Laplace/Poisson equations on a grid.
-Exposes a `Field` object that the `driftdiffusion` module can query for a
-drift velocity at any point.
+This keeps each solver usable both as a one-shot batch call (`solve`,
+`generate`) and, where needed, as an incremental stepper (`step`) for
+interactive or animated use in a future GUI.
 
-### `brownian`
-Generates stochastic particle trajectories, computes MSD, and solves the
-diffusion equation directly. Exposes a step-generation interface that the
-`driftdiffusion` module reuses for its noise term.
+## Documentation Map
 
-### `driftdiffusion`
-Depends on both `electrostatics` and `brownian`. Combines the deterministic
-drift term from an electrostatic field with the stochastic term from the
-Brownian module into a single time-stepped simulation.
+Project documentation is split by purpose, to avoid duplicating the same
+material across files:
 
-### `visualization`
-Provides shared, reusable plotting functions (field maps, trajectories,
-MSD curves, animations) so that individual modules don't duplicate plotting
-code. Depends on `core` only, not on the physics modules, to avoid circular
-imports — physics modules pass plain arrays/objects to `visualization`
-functions.
-
-### `utils`
-Small, dependency-free helpers (input validation, file I/O, array helpers)
-usable by any module.
-
-## Data Flow (Target State)
-
-```
- charge configuration
-        │
-        ▼
-  electrostatics.Field  ──────────┐
-                                   │  drift velocity at (x, y[, z])
-                                   ▼
- brownian.Trajectory ───────► driftdiffusion.Simulation ───► visualization
-   (noise term)                                                   │
-                                                                   ▼
-                                                            plots / animations
-```
-
-## Future Layers (not yet started)
-
-- **API layer (`FastAPI`)** — will wrap the `driftdiffusion` engine behind
-  HTTP endpoints for the GUI to call. Lives outside `src/shypyengine` in a
-  future `api/` package to keep the physics core UI-agnostic.
-- **GUI (`React` / `Streamlit`/`PyQt` prototype)** — a separate front-end
-  project that consumes the API layer; does not import the physics package
-  directly in production.
-- **AI assistant** — will call into the public `shypyengine` API to explain
-  results and suggest parameters; treated as a consumer of the package, not
-  a dependency of it.
-- **Gamification** — built on top of the simulation + AI assistant layers.
-
-## Import Rules
-
-To avoid circular dependencies as the project grows:
-
-- `core` → no internal dependencies
-- `utils` → may depend on `core`
-- `electrostatics`, `brownian` → may depend on `core`, `utils`
-- `driftdiffusion` → may depend on `core`, `utils`, `electrostatics`, `brownian`
-- `visualization` → may depend on `core`, `utils` only (accepts data, not
-  module-specific objects, where practical)
+- **README.md**: entry point -- installation, quick start, feature
+  overview, and a condensed summary of each module's numerical methods.
+- **docs/architecture.md** (this file): how the modules relate to each
+  other and the shared design patterns solvers follow.
+- **docs/numerical_methods.md**: the project's derivations reference --
+  full mathematical derivations (Poisson/Laplace from Gauss's law, the
+  finite-difference stencil via Taylor expansion, stability analysis, the
+  random-walk-to-diffusion-equation derivation) and error analysis
+  (truncation vs. discretization error, floating-point precision,
+  boundary condition accuracy).
+- **docs/electrostatics.md**: usage-oriented background for Phase 1
+  specifically -- the same physics summarized at a level meant to be read
+  alongside the API, with pointers into `numerical_methods.md` for the
+  full derivations.

@@ -1,9 +1,12 @@
-"""Brownian motion module (not yet implemented).
+"""Brownian motion module: random walks, MSD, and diffusion equation solving."""
 
-Planned contents:
-- Random walk / Gaussian step generation
-- Mean squared displacement (MSD) computation
-- Diffusion equation finite-difference solver
+from shypyengine.brownian.diffusion import DiffusionSolver1D
+from shypyengine.brownian.msd import estimate_diffusion_coefficient, mean_squared_displacement
+from shypyengine.brownian.random_walk import RandomWalk
 
-See docs/numerical_methods.md for method details and validation strategy.
-"""
+__all__ = [
+    "DiffusionSolver1D",
+    "RandomWalk",
+    "estimate_diffusion_coefficient",
+    "mean_squared_displacement",
+]
